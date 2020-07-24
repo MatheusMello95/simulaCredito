@@ -24,12 +24,14 @@ class EmprestimoController extends Controller
         }
         if($request->has('instituicoes')){
             foreach($request->instituicoes as $instituicao){
+                $instituicao = strtoupper($instituicao);
                 if(!$this->validaInstituicao($instituicao)){
                     return response()->json([
-                        'message'=> 'Instituicao invalida'
+                        'message'=> 'Instituicao invalida / Institucao deve ser escrita maiuscula'
                     ], 400);
                 }
                 if($request->has('convenios')){
+                    $request->convenios = strtoupper($request->convenios);
                     if(!$this->validaConvenioBanco($instituicao, $request->convenios)){
                         return response()->json([
                             'message'=> 'Convenio invalido'
@@ -72,6 +74,7 @@ class EmprestimoController extends Controller
             }
         }else if($request->has('convenios')){
             foreach($request->convenios as $convenio){
+                $convenio = strtoupper($convenio);
                 if(!$this->validaConvenio($convenio)){
                     return response()->json([
                         'message'=> 'Convenios invalido'
