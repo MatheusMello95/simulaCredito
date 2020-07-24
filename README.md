@@ -31,3 +31,6 @@
         * instituicoes: tipo array 
         * convenios: tipo array
         * parcela: tipo numerico
+## Postman Collection
+    * Arquivo: Empresta.postman_collection.json
+    
