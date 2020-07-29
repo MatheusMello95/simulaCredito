@@ -31,8 +31,8 @@ class EmprestimoController extends Controller
                     ], 400);
                 }
                 if($request->has('convenios')){
-                    $request->convenios = strtoupper($request->convenios);
-                    if(!$this->validaConvenioBanco($instituicao, $request->convenios)){
+                    $convenios = array_map('strtoupper',$request->convenios);
+                    if(!$this->validaConvenioBanco($instituicao, $convenios)){
                         return response()->json([
                             'message'=> 'Convenio invalido'
                         ], 400);
@@ -43,12 +43,12 @@ class EmprestimoController extends Controller
                                 'message'=> 'Numero de parcelas invalidos'
                             ], 400);
                         }
-                        $result = $this->calculaParcelaConvenioBanco($request->valor_emprestimo, $request->parcela, $request->convenios, $instituicao);
+                        $result = $this->calculaParcelaConvenioBanco($request->valor_emprestimo, $request->parcela, $convenios, $instituicao);
                         return response()->json([
                             'data' => $result
                         ],200);
                     }else{
-                        $result =  $this->calculaParcelasConvenio($instituicao, $request->valor_emprestimo, $request->convenios);
+                        $result =  $this->calculaParcelasConvenio($instituicao, $request->valor_emprestimo, $convenios);
                         return response()->json([
                             'data' => $result
                         ],200);
